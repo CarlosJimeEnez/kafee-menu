@@ -12,8 +12,8 @@
           --primary: #DDF8EB;
           --secondary: #dddbff;
           --secondary-hover: #f0f0ffa8;
-          --accent: #BF4041;
-          --accent-hover: #ff4d4d;
+          --accent: #C4743F;
+          --accent-hover: #e4ddd9;
         
         }
         .dark {
@@ -30,7 +30,7 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:700|Poppins:400');
 
 body {
-  font-family: 'Poppins';
+  font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif ;
   font-weight: 400;
 }
 

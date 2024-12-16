@@ -1,26 +1,4 @@
-<app-header></app-header>
-<main class="grid grid-cols-12 gap-4 pt-11 px-5">
 
-  <div class="col-span-12  border rounded-lg p-4">
-    <h2 class="tracking-tight leading-none font-bold font-sans">Nuestros Cafes</h2>
-    <p class="text-text-secondary font-semibold font-sans">Elige tu café favorito </p>
-    <!-- selecor -->
-     <div class="p-4 flex items-center justify-around">
-       <h5>Todos</h5>
-       <h5>Ofertas</h5>
-       <h5>Expressos</h5>
-       <h5>Capuccino</h5>
-       <h5>Personalizados</h5>
-     </div>
-    <div class="w-full h-[55vh] overflow-y-auto grid grid-cols-12 gap-4 px-5">
-      @for (coffe of coffees; track $index) {
-      <div class="col-span-12 md:col-span-6 lg:col-span-3 2xl:col-span-2">
-        <app-card></app-card>
-      </div>
-      }
-    </div>
-  </div>
-  
-  
-
+<main>
+  <router-outlet></router-outlet>
 </main>

@@ -5,7 +5,7 @@ import { Component } from "@angular/core";
   standalone: true,
   imports: [],
   template: `
-    <div class="fixed top-0 left-0 right-0 flex justify-evenly items-center bg-secondary text-text p-2">
+    <div class=" top-0 left-0 right-0 flex justify-evenly items-center bg-secondary text-text p-2">
       <div>
         <p class="text-text">Mexico</p>
       </div>
