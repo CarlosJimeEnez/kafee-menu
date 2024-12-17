@@ -5,12 +5,19 @@ import { Component } from "@angular/core";
   standalone: true,
   imports: [],
   template: `
-    <main class="grid grid-cols-12 gap-4">
+    <main class="grid grid-cols-12 gap-4 mb-5">
       <!-- Imagen   -->
-      <div class="col-span-6"></div>
+      <div class="col-span-6">
+        <img
+          src="assets/img/coffe.png"
+          alt="Cafe"
+          class="w-full h-full object-cover rounded-2xl">
+      </div>
+
+
       <!-- Contenido -->
       <div class="col-span-6">
-        <h1>Cafe</h1>
+        <h1 class="leading-tight">Cafe</h1>
         <h5>$mxn 1</h5>
         <!-- Time -->
         <span
@@ -18,7 +25,6 @@ import { Component } from "@angular/core";
         >
           Dark
         </span>
-
         <!-- Card cantidades  -->
         <div class="max-w-md p-6 bg-background border rounded-2xl mt-5">
           <h4>Descripcion</h4>
@@ -66,13 +72,19 @@ import { Component } from "@angular/core";
           </div>
         </div>
 
+        <button
+          type="button"
+          class="text-white bg-accent hover:bg-accent-hover font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-5"
+        >
+          Agregar a el carrito
+        </button>
 
         <button
-            type="button"
-            class="text-white bg-accent hover:bg-accent-hover font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-5"
-            >
-            Agregar a el carrito
-          </button>
+          type="button"
+          class="text-white bg-accent hover:bg-accent-hover font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-5"
+        >
+          Comprar ahora
+        </button>
       </div>
     </main>
   `,

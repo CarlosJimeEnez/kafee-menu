@@ -23,7 +23,7 @@ import { HeaderComponent } from "../../components/header/header.component";
   </div> 
   
   <!-- Selector Categorias  -->
-   <div class="col-span-12 sticky top-11 z-10 bg-background p-3 flex items-center cursor-pointer justify-around border rounded-2xl ">
+   <div class="col-span-12 sticky top-3 z-10 bg-background p-3 flex items-center cursor-pointer justify-around border rounded-2xl ">
     <h5 class="text-accent">Todos</h5>
     <h5 class="text-text-secondary hover:text-accent">Ofertas</h5>
     <h5 class="text-text-secondary hover:text-accent">Expressos</h5>

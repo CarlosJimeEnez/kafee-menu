@@ -13,7 +13,7 @@
           --secondary: #dddbff;
           --secondary-hover: #f0f0ffa8;
           --accent: #C4743F;
-          --accent-hover: #e4ddd9;
+          --accent-hover: #50240b;
         
         }
         .dark {
@@ -37,6 +37,7 @@ body {
 h1, h2, h3, h4, h5 {
   font-family: 'Poppins';
   font-weight: 700;
+ 
 }
 
 html {font-size: 100%;} /* 16px */
