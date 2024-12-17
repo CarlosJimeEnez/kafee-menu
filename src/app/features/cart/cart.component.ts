@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-cart",
@@ -11,13 +12,18 @@ import { Component } from "@angular/core";
         <img
           src="assets/img/coffe.png"
           alt="Cafe"
-          class="w-full h-full object-cover rounded-2xl">
+          class="w-full h-full object-cover rounded-2xl"
+        />
       </div>
-
 
       <!-- Contenido -->
       <div class="col-span-6">
-        <h1 class="leading-tight">Cafe</h1>
+        <div class="flex items-center ">
+          <h1 class="leading-tight">Cafe</h1>
+          <button class="m-auto bg-background p-2 rounded-full" (click)="close()">
+            <img src="assets/close.svg" alt="close" />
+          </button>
+        </div>
         <h5>$mxn 1</h5>
         <!-- Time -->
         <span
@@ -26,7 +32,7 @@ import { Component } from "@angular/core";
           Dark
         </span>
         <!-- Card cantidades  -->
-        <div class="max-w-md p-6 bg-background border rounded-2xl mt-5">
+        <div class="max-w-md p-3 bg-background border rounded-2xl mt-5">
           <h4>Descripcion</h4>
           <div class="flex items-center justify-between mt-3">
             <h5 class="text-text">Cantidad</h5>
@@ -42,7 +48,7 @@ import { Component } from "@angular/core";
         </div>
 
         <!-- Card tamaños -->
-        <div class="max-w-md p-6 bg-background border rounded-2xl mt-5">
+        <div class="max-w-md p-3 bg-background border rounded-2xl mt-5">
           <h4>Tamaño</h4>
           <div class="flex items-center justify-between mt-3">
             <h5 class="text-text">Chico</h5>
@@ -90,4 +96,10 @@ import { Component } from "@angular/core";
   `,
   styles: ``,
 })
-export class CartComponent {}
+export class CartComponent {
+  constructor(private router: Router) {}
+  close() {
+    this.router.navigate(['/']);
+    console.log("close");
+  }
+}
