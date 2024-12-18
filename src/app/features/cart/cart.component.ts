@@ -21,7 +21,7 @@ import { Coffees } from "../../interfaces/coffee";
       <!-- Contenido -->
       <div class="col-span-6">
         <div class="flex items-center ">
-          <h1 class="leading-tight">asd</h1>
+          <h1 class="leading-tight">{{this.coffee?.Nombre}}</h1>
           <button
             class="m-auto bg-background p-2 rounded-full"
             (click)="close()"
