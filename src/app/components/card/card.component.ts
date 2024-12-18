@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject, input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
@@ -16,8 +16,8 @@ import { Router } from "@angular/router";
         <div class="flex items-center justify-between">
           <!-- Costo   -->
           <div class="">
-            <h5>Expresso</h5>
-            <h5>$1.00</h5>
+            <h5>{{nombre()}}</h5>
+            <h5>{{precio()}}</h5>
           </div>
           <button
             type="button"
@@ -32,8 +32,15 @@ import { Router } from "@angular/router";
   `,
   styles: ``,
 })
-export class CardComponent {
-  constructor(private router: Router){}
+export class CardComponent implements OnInit {
+  private router = inject(Router);
+  nombre = input("Nombre");
+  precio = input<number>();
+
+  constructor(){}
+  ngOnInit(): void {
+     
+  }
 
   navigateToCart(){
     console.log("card component navigation")

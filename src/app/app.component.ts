@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { invoke } from "@tauri-apps/api/core";
@@ -13,6 +13,7 @@ import { HeaderComponent } from "./components/header/header.component";
 })
 export class AppComponent {
 
+  
   greetingMessage = "";
 
   greet(event: SubmitEvent, name: string): void {

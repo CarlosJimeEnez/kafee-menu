@@ -1,19 +1,24 @@
-import { CardComponent } from "../../components/card/card.component";
 import { HeaderComponent } from "../../components/header/header.component";
-import { Component } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
+import { Component, inject, OnInit } from "@angular/core";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ViewCartComponent } from "./components/view-cart/view-cart.component";
+import { SupabaseService } from "../../services/supabase-service.service";
+import { Coffees } from "../../interfaces/coffee";
+import { CardComponent } from "../../components/card/card.component";
+
+interface Item {
+  name: string;
+}
 
 @Component({
   selector: "app-menu",
   standalone: true,
   imports: [
-    CardComponent,
     HeaderComponent,
     MatSidenavModule,
-    MatButtonModule,
     ViewCartComponent,
+    ViewCartComponent,
+    CardComponent,
   ],
   template: `
     <app-header></app-header>
@@ -56,17 +61,31 @@ import { ViewCartComponent } from "./components/view-cart/view-cart.component";
         <h5 class="text-text-secondary hover:text-accent">Personalizados</h5>
       </div>
 
-      @for (coffe of coffees; track $index) {
+      @if (this.coffeeLoaded) { @for (coffee of coffees; track coffee.id) {
       <div class="col-span-12 md:col-span-6 lg:col-span-3 2xl:col-span-2">
-        <app-card></app-card>
+        <app-card [nombre]="coffee.Nombre" [precio]="coffee.PrecioBase"></app-card>
       </div>
-      }
+      } }
     </div>
-      
+
     <app-view-cart></app-view-cart>
   `,
   styles: ``,
 })
-export class MenuComponent {
-  coffees: Array<any> = [1, 2, 3, 4, 5];
+export class MenuComponent implements OnInit {
+  private supabaseService = inject(SupabaseService);
+  coffeeLoaded = false;
+  coffees: Coffees[] = [];
+
+  constructor() {}
+  ngOnInit(): void {
+    this.fetchData();
+  }
+
+  async fetchData() {
+    const data = await this.supabaseService.getData("Productos");
+    this.coffees = data ?? [];
+    console.log(this.coffees[0].PrecioBase);
+    this.coffeeLoaded = true;
+  }
 }
