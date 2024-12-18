@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from "@angular/core";
+import { Component, inject, input, OnInit, signal } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
@@ -36,14 +36,17 @@ export class CardComponent implements OnInit {
   private router = inject(Router);
   nombre = input("Nombre");
   precio = input<number>();
+  id = input<number>();
 
   constructor(){}
   ngOnInit(): void {
-     
+    
   }
 
   navigateToCart(){
-    console.log("card component navigation")
-    this.router.navigate(['/cart']);
+    const id = this.id();
+    this.router.navigate(['/cart'], {
+      queryParams: { id: id },
+    });
   }
 }

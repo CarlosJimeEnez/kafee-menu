@@ -1,5 +1,5 @@
 export interface Coffees {
-    id: string;
+    id: number;
     Nombre: string;
     PrecioBase: number;
     tamañoId: number; 

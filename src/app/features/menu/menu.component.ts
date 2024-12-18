@@ -63,7 +63,7 @@ interface Item {
 
       @if (this.coffeeLoaded) { @for (coffee of coffees; track coffee.id) {
       <div class="col-span-12 md:col-span-6 lg:col-span-3 2xl:col-span-2">
-        <app-card [nombre]="coffee.Nombre" [precio]="coffee.PrecioBase"></app-card>
+        <app-card [id]="coffee.id" [nombre]="coffee.Nombre" [precio]="coffee.PrecioBase"></app-card>
       </div>
       } }
     </div>
