@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
     </div>
 
     <button
-    (click)="toggleSidenav()" class="sticky bottom-4 left-1/2 transform -translate-x-1/2 z-50 w-fit mx-auto flex justify-center text-white bg-accent hover:bg-accent-hover items-center font-semibold font-sans px-5 py-4 rounded-2xl" 
+    (click)="toggleSidenav()" class="sticky bottom-3 left-1/2 transform -translate-x-1/2 z-50 w-fit mx-auto flex justify-center text-white bg-accent hover:bg-accent-hover items-center font-semibold font-sans px-5 py-4 rounded-2xl" 
     >
     <div class="flex items-center justify-center" >
       <p>Ver carrito</p>

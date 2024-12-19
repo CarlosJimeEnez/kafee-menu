@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject, input, OnInit, signal } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
   standalone: true,
   imports: [],
   template: `
-    <div class="max-w-sm border rounded-lg bg-secondary py-3">
+    <div class="max-w-sm border  rounded-lg bg-secondary py-3 ">
       <!-- Imagen   -->
        <div class="flex justify-center">
          <img class="rounded-t-lg" src="assets/img/coffe.png" alt="" />
@@ -15,13 +15,14 @@ import { Router } from "@angular/router";
       <div class="px-5">
         <div class="flex items-center justify-between">
           <!-- Costo   -->
-          <div class="">
-            <h5>Expresso</h5>
-            <h5>$1.00</h5>
+          <div class="flex flex-col">
+            <h5>{{nombre()}}</h5>
+            <p class="text-text-secondary">{{descripcion()}} (Desarrollo) </p>
+            <h5>MX$ {{precio()}}</h5>
           </div>
           <button
             type="button"
-            class="text-white bg-accent hover:bg-accent-hover font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 "
+            class="text-white bg-accent hover:bg-accent-hover font-medium rounded-full text-sm px-5 mx-2 py-2.5 text-center me-2 mb-2 "
             (click)="navigateToCart()"
             >
             <img class="w-5 h-5" src="assets/add_2.svg" alt="asset add" />
@@ -32,11 +33,22 @@ import { Router } from "@angular/router";
   `,
   styles: ``,
 })
-export class CardComponent {
-  constructor(private router: Router){}
+export class CardComponent implements OnInit {
+  private router = inject(Router);
+  nombre = input("Nombre");
+  precio = input<string>();
+  id = input<number>();
+  descripcion = input<string>();
+
+  constructor(){}
+  ngOnInit(): void {
+    
+  }
 
   navigateToCart(){
-    console.log("card component navigation")
-    this.router.navigate(['/cart']);
+    const id = this.id();
+    this.router.navigate(['/cart'], {
+      queryParams: { id: id },
+    });
   }
 }
