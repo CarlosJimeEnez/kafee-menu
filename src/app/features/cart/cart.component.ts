@@ -2,13 +2,18 @@ import { Component, inject, OnInit, signal } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SupabaseService } from "../../services/supabase-service.service";
 import { Coffees } from "../../interfaces/coffee";
-
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 @Component({
   selector: "app-cart",
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   template: `
-    <main class="grid grid-cols-12 gap-4 mb-5">
+    <main class="grid grid-cols-12 gap-4 mb-5 mt-3">
       <!-- Imagen   -->
       <div class="col-span-6">
         <img
@@ -21,85 +26,100 @@ import { Coffees } from "../../interfaces/coffee";
       <!-- Contenido -->
       <div class="col-span-6">
         <div class="flex items-center ">
-          <h1 class="leading-tight">{{this.coffee?.Nombre}}</h1>
+          <div class="w-1/2">
+            <h1 class="leading-tight">{{ this.coffee?.Nombre }}</h1>
+          </div>
           <button
-            class="m-auto bg-background p-2 rounded-full"
+            class="m-auto bg-background p-2 rounded-full "
             (click)="close()"
           >
             <img src="assets/close.svg" alt="close" />
           </button>
         </div>
-        <h5>$mxn 1</h5>
+
+        <!-- Precio -->
+        <h5><span>MX$</span> {{ coffee?.PrecioBase }}</h5>
+
         <!-- Time -->
-        <span
-          class="bg-gray-100 text-gray-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
+        <div
+          class="w-fit flex items-center text-sm font-medium px-2.5 py-0.5 mt-1 rounded dark:bg-gray-700 dark:text-gray-300"
         >
-          Dark
-        </span>
+          <img class="w-4 h-4 me-2" src="assets/icon _clock.svg" alt="clock" />
+          {{ coffee?.TiempoBase }} min
+        </div>
+
         <!-- Card cantidades  -->
         <div class="max-w-md p-3 bg-background border rounded-2xl mt-5">
           <h4>Descripcion</h4>
           <div class="flex items-center justify-between mt-3">
-            <h5 class="text-text">Cantidad</h5>
-            <h5>20 ml</h5>
-          </div>
-
-          <div class="border-b border-accent my-3"></div>
-
-          <div class="flex items-center justify-between">
-            <h5 class="text-text">Intensidad</h5>
-            <h5>Fuerte</h5>
+            <h5 class="text-text-secondary">{{ coffee?.Descripcion }}</h5>
           </div>
         </div>
 
         <!-- Card tamaños -->
         <div class="max-w-md p-3 bg-background border rounded-2xl mt-5">
-          <h4>Tamaño</h4>
-          <div class="flex items-center justify-between mt-3">
-            <h5 class="text-text">Chico</h5>
-            <input
-              id="default-checkbox"
-              type="checkbox"
-              value=""
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          </div>
-
-          <div class="border-b border-accent my-3"></div>
-
-          <div class="flex items-center justify-between">
-            <div>
-              <h5 class="text-text">
-                Grande <span class="text-sm">+ 16mx</span>
-              </h5>
+          <form [formGroup]="form" (submit)="agregarCarrito()">
+            <h4>Tamaño</h4>
+            <div class="flex items-center justify-between mt-3">
+              <h5 class="text-text">Sencillo</h5>
+              <input
+                type="radio"
+                value="sencillo"
+                name="size"
+                formControlName="size"
+                class="w-4 h-4"
+              />
             </div>
 
-            <input
-              id="default-checkbox"
-              type="checkbox"
-              value=""
-              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          </div>
+            <div class="border-b border-accent my-3"></div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <h5 class="text-text">
+                  Grande <span class="text-text-secondary"><p>+ 16mx</p></span>
+                </h5>
+              </div>
+
+              <input
+                type="radio"
+                name="size"
+                value="grande"
+                formControlName="size"
+                class="w-4 h-4  "
+              />
+            </div>
+          </form>
         </div>
 
-        <button
-          type="button"
-          class="text-white bg-accent hover:bg-accent-hover font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-5"
-        >
-          Agregar a el carrito
-        </button>
+        <div class="flex items-center justify-start">
+          <button
+            (click)="agregarCarrito()"
+            type="button"
+            class="text-white bg-accent hover:bg-accent-hover font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-5"
+          >
+            <div class="flex items-center justify-center">
+              <img
+                class="w-h h-4 me-2"
+                src="assets/shopping_cart.svg"
+                alt="shopping_cart"
+              />
+              <p>Agregar a el carrito</p>
+            </div>
+          </button>
 
-        <button
-          type="button"
-          class="text-white bg-accent hover:bg-accent-hover font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-5"
-        >
-          Comprar ahora
-        </button>
+          <button
+            type="button"
+            class="text-white bg-accent hover:bg-accent-hover font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 mt-5"
+          >
+            <p>Comprar ahora</p>
+          </button>
+        </div>
       </div>
       } @else {
       <!-- Loading -->
-      <div class="col-span-4 flex items-center justify-center w-full h-full  border border-gray-200 rounded-lg bg-gray-50 ">
+      <div
+        class="col-span-4 flex items-center justify-center w-full h-full  border border-gray-200 rounded-lg bg-gray-50 "
+      >
         <div role="status">
           <svg
             aria-hidden="true"
@@ -120,7 +140,9 @@ import { Coffees } from "../../interfaces/coffee";
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-
+      <button class="m-auto bg-background p-2 rounded-full" (click)="close()">
+        <img src="assets/close.svg" alt="close" />
+      </button>
       }
     </main>
   `,
@@ -130,10 +152,14 @@ export class CartComponent implements OnInit {
   private supabaseService = inject(SupabaseService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private fb = inject(FormBuilder);
+
   coffee?: Coffees = undefined;
   dataLoaded = false;
-
   id: number = 0;
+  form = this.fb.group({
+    size: ["sencillo", Validators.required],
+  });
 
   constructor() {}
 
@@ -164,6 +190,21 @@ export class CartComponent implements OnInit {
 
   close() {
     this.router.navigate(["/"]);
-    console.log("close");
+  }
+
+
+  agregarCarrito() {
+    console.warn(this.form.value.size);
+    const nuevaOrden = {
+      created_at: new Date().toISOString(),
+      usuarioId: 1,
+      completada: false,
+    };
+
+    this.supabaseService.insertData("Ordenes", nuevaOrden).subscribe({
+      next: (data) => {console.warn("Orden creada:", data);},
+      error: (error) => {console.error("Error al crear orden:", error);},
+      complete: () => {console.log("Orden creada exitosamente");}
+    })
   }
 }

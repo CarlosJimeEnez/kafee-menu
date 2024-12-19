@@ -54,16 +54,23 @@ interface Item {
       <div
         class="col-span-12 sticky top-3 z-10 bg-background p-3 flex items-center cursor-pointer justify-around border rounded-2xl "
       >
-        <h5 class="text-accent">Todos</h5>
-        <h5 class="text-text-secondary hover:text-accent">Ofertas</h5>
-        <h5 class="text-text-secondary hover:text-accent">Expressos</h5>
-        <h5 class="text-text-secondary hover:text-accent">Capuccino</h5>
-        <h5 class="text-text-secondary hover:text-accent">Personalizados</h5>
+        <div><h5 class="text-accent">Todos</h5></div>
+     
+        <div>   <h5 class="text-text-secondary hover:text-accent">Ofertas</h5> <p class="text-text-secondary">Desarrollo</p></div>
+        
+        <div><h5 class="text-text-secondary hover:text-accent">Expressos</h5> <p  class="text-text-secondary">Desarrollo</p></div>
+        
+        <div><h5 class="text-text-secondary hover:text-accent">Capuccino</h5> <p  class="text-text-secondary">Desarrollo</p></div>
       </div>
 
       @if (this.coffeeLoaded) { @for (coffee of coffees; track coffee.id) {
-      <div class="col-span-12 md:col-span-6 lg:col-span-3 2xl:col-span-2">
-        <app-card [id]="coffee.id" [nombre]="coffee.Nombre" [precio]="coffee.PrecioBase"></app-card>
+      <div class="col-span-12 md:col-span-6 lg:col-span-4 2xl:col-span-2">
+        <app-card
+          [id]="coffee.id"
+          [nombre]="coffee.Nombre"
+          [precio]="coffee.PrecioBase"
+          [descripcion]="coffee.Descripcion"
+        ></app-card>
       </div>
       } }
     </div>

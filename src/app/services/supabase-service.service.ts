@@ -16,16 +16,6 @@ export class SupabaseService {
     this.supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
   }
 
-  // Ejemplo: Insertar datos en una tabla
-  async insertData(table: string, data: any) {
-    const { error } = await this.supabase.from(table).insert([data]);
-    if (error) {
-      console.error("Error al insertar datos:", error.message);
-    } else {
-      console.log("Datos insertados correctamente");
-    }
-  }
-
   // Ejemplo: Obtener datos de una tabla
   async getData(table: string) {
     const { data, error } = await this.supabase.from(table).select("*");
@@ -53,4 +43,22 @@ export class SupabaseService {
         });
     });
   }
+
+  insertData<T>(table: string, data: T): Observable<T> {
+    return new Observable<T>((subscriber) => {
+      this.supabase
+        .from(table)
+        .insert(data)
+        .single() // Inserta un único registro y devuelve el objeto creado
+        .then(({ data, error }) => {
+          if (error) {
+            subscriber.error(error); // Manejo de errores
+            return;
+          }
+          subscriber.next(data as T); // Devuelve el dato insertado
+          subscriber.complete();
+        });
+    });
+  }
+  
 }

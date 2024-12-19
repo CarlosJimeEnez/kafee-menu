@@ -1,7 +1,9 @@
 export interface Coffees {
     id: number;
     Nombre: string;
-    PrecioBase: number;
+    PrecioBase: string;
     tamañoId: number; 
     tipoBebida: string;
+    Descripcion: string;
+    TiempoBase: number;
 }
