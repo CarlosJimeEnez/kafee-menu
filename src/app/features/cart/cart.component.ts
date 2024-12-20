@@ -8,6 +8,10 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { RustComunicationService } from "../../services/rust-comunication.service";
+import { UserInvitado } from "../../interfaces/userInvitado";
+import { OrderRequest } from "../../interfaces/orderRequest";
+
 @Component({
   selector: "app-cart",
   standalone: true,
@@ -153,6 +157,7 @@ export class CartComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
+  private rustService = inject(RustComunicationService);
 
   coffee?: Coffees = undefined;
   dataLoaded = false;
@@ -189,22 +194,40 @@ export class CartComponent implements OnInit {
   }
 
   close() {
-    this.router.navigate(["/"]);
+    this.router.navigate(["/menu"]);
   }
-
 
   agregarCarrito() {
-    console.warn(this.form.value.size);
-    const nuevaOrden = {
-      created_at: new Date().toISOString(),
-      usuarioId: 1,
-      completada: false,
+    const size = this.form.get('size')?.value || '';;
+
+    const userString = sessionStorage.getItem("user");
+    const user: UserInvitado = JSON.parse(userString || "");
+    console.log("User", user);
+
+    const nuevaOrden: OrderRequest = {
+      id_user: Number(user.id),
+      id_producto: Number(this.id),
+      size: size,
+      message: 'addOrden'
     };
 
-    this.supabaseService.insertData("Ordenes", nuevaOrden).subscribe({
-      next: (data) => {console.warn("Orden creada:", data);},
-      error: (error) => {console.error("Error al crear orden:", error);},
-      complete: () => {console.log("Orden creada exitosamente");}
-    })
-  }
+    console.log('Order values:', {
+      id_user: `${nuevaOrden.id_user} (${typeof nuevaOrden.id_user})`,
+      id_producto: `${nuevaOrden.id_producto} (${typeof nuevaOrden.id_producto})`,
+      size: `${nuevaOrden.size} (${typeof nuevaOrden.size})`,
+      message: `${nuevaOrden.message} (${typeof nuevaOrden.message})`
+    });
+
+    this.rustService
+      .OrdenDescripcion(
+        "insert_orden",
+        nuevaOrden
+      )
+      .then((res) => {
+        console.log("Orden agregada", res);
+      })
+      .catch((err) => {
+        console.error("Error al agregar orden", err);
+      });
+ }
 }
